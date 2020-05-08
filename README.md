@@ -12,7 +12,7 @@ This app allows users to exchange currency with those others that are traveling 
 
 ### App Evaluation
 [Evaluation of your app across the following attributes]
-- **Category:** Social Networking / Currency
+- **Category:** Social Networking/ Travel / Currency
 - **Mobile:** This app would primarily be developed for mobile, since many of these transactions would be simple and on-the-go.
 - **Story:** Avoids transaction fees in currency exchanges.
 - **Market:** Any traveling individual could choose to use this app, and to maintain user trust, each user would have a reliability rating.
@@ -26,7 +26,6 @@ This app allows users to exchange currency with those others that are traveling 
 
 **Required Must-have Stories**
 
-* Users can see the locations of other users for exchange through a map
 * Users can contact other users for details in exchange
 * Users can login to the app
 * Users can sign up for an account
@@ -35,16 +34,17 @@ This app allows users to exchange currency with those others that are traveling 
 **Optional Nice-to-have Stories**
 
 * Users can review other users regarding their exchange experience
+* Users can see the locations of other users for exchange through a map
 
 ### 2. Screen Archetypes
 
-* Login
+* [X] Login
    * Users can choose to login or sign up for an account. 
-* Registration screen
+* [X] Registration screen
    * users can sign up for an account
 * Profile Page
    * Users can establish a profile to determine their credibility and / or currency they are looking for / can provide for exchange. 
-* Messages Page
+* [X] Messages Page
    * Users can contact the person to exchange through the message function to negotiate price and to meet up.
 * Exchange Search Screen
    * Users can view the locations of the people who can provide the desired currency exchange through the map
@@ -57,6 +57,8 @@ This app allows users to exchange currency with those others that are traveling 
 * Profile page
 * Message page
 
+<img src="http://g.recordit.co/WQTih6DIOw.gif" width=600>
+
 
 **Flow Navigation** (Screen to Screen)
 
@@ -65,7 +67,7 @@ This app allows users to exchange currency with those others that are traveling 
 
 ## Wireframes
 [Add picture of your hand sketched wireframes in this section]
-<img src="swappit-app.jpeg" width=600>
+<img src="swappit-app.jpeg" width=100>
 
 ### [BONUS] Digital Wireframes & Mockups
 https://xd.adobe.com/view/ca76cdc7-bab4-4807-488e-87034eac68da-bc47/
