@@ -30,6 +30,7 @@ class SwappersViewController: UIViewController, UITableViewDelegate, UITableView
         Database.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 let user = User()
+                user.id = snapshot.key
                 user.firstName = dictionary["firstName"] as? String
                 user.lastName = dictionary["lastName"] as? String
                 user.email = dictionary["email"] as? String

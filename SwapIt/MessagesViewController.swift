@@ -172,7 +172,8 @@ class MessagesViewController: UIViewController, UITableViewDelegate, UITableView
                 user.email = dictionary["email"] as? String
                }, withCancel: nil)
        }
-        //self.performSegue(withIdentifier: "chatMessageView", sender: message)
+        
+       //self.performSegue(withIdentifier: "chatMessageView", sender: message)
 
 
     }
@@ -188,12 +189,7 @@ class MessagesViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func newMessagesAction(_ sender: Any) {
         self.performSegue(withIdentifier: "newMessage", sender: nil)
     }
-    /*
-    func getUser(user: User) {
-        let chatViewController = ChatViewController()
-        chatViewController.user = user
-        
-    }*/
+
 
     /*
     // MARK: - Navigation
