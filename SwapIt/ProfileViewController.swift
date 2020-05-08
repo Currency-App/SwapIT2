@@ -19,9 +19,16 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var desiredLabel: UILabel!
     var ref: DatabaseReference!
     
+    let myRefreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadData()
         
+        // Do any additional setup after loading the view.
+    }
+    
+    func loadData() {
         let userID = Auth.auth().currentUser?.uid
         ref = Database.database().reference()
         ref.child("users").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
@@ -43,9 +50,6 @@ class ProfileViewController: UIViewController {
           }) { (error) in
             print(error.localizedDescription)
         }
-        
-        
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func editButton(_ sender: Any) {

@@ -23,14 +23,16 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
     @IBOutlet weak var currentText: UITextField!
     @IBOutlet weak var desiredText: UITextField!
     var selectedCurrency: String?
-    var currencyType = ["USD", "EUR"]
+    var currencyType = ["USD", "EUR", "HRK", "HUF", "SGD", "HKD", "JPY", "TWD"]
+    
     var iURL: String?
     var imageName: String?
     var ref: DatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        createPickerView()
+        createPickerViewCurrent()
+        createPickerViewDesired()
         dismissPickerView()
         
         let userID = Auth.auth().currentUser?.uid
@@ -50,6 +52,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
 
         // Do any additional setup after loading the view.
     
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -59,21 +62,21 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return currencyType[row]
+            return currencyType[row]
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
         selectedCurrency = currencyType[row]
         currentText.text = selectedCurrency
         desiredText.text = selectedCurrency
         
     }
-    func createPickerView()
+    func createPickerViewCurrent()
     {
         let pickerView = UIPickerView()
         pickerView.delegate = self
         
         currentText.inputView = pickerView
-        desiredText.inputView = pickerView
     }
     func dismissPickerView()
     {
@@ -86,6 +89,14 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
         
         currentText.inputAccessoryView = toolBar
         desiredText.inputAccessoryView = toolBar
+    }
+    
+    func createPickerViewDesired()
+    {
+        let pickerView = UIPickerView()
+        pickerView.delegate = self
+               
+        desiredText.inputView = pickerView
     }
     
     @objc func dismissKeyboard()
