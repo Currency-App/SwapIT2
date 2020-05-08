@@ -13,6 +13,7 @@ target 'SwapIt' do
   pod "AlamofireImage"
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'
+  pod 'Firebase/Storage'
  
 
   target 'SwapItTests' do

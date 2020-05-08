@@ -10,6 +10,8 @@ import UIKit
 import AlamofireImage
 import FirebaseFirestore
 import FirebaseDatabase
+import FirebaseStorage
+import FirebaseAuth
 
 
 class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextViewDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate{
@@ -21,16 +23,64 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
     @IBOutlet weak var desiredText: UITextField!
     var selectedCurrency: String?
     var currencyType = ["USD", "EUR"]
-    var docRef: DocumentReference!
+    var iURL: String?
+    var ref: DatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         createPickerView()
         dismissPickerView()
-        docRef = Firestore.firestore().document("profileInformation/profile")
+        
+        let userID = Auth.auth().currentUser?.uid
+        ref = Database.database().reference()
+        ref.child("users").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
+          // Get user value
+            let value = snapshot.value as? NSDictionary
+            self.currentText.text = value?["currentCurrency"] as? String
+            self.desiredText.text = value?["desiredCurrency"] as? String
+            self.nameText.text = value?["profilename"] as? String
+            
+            /*
+            let storageRef = Storage.storage().reference(forURL: (value?["profileImage"] as? String)!
+            if let uploadData = UIImagePNGRepresentation(profileImage.image!)
+            {
+                storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
+                    self.hideActivityIndicator(view: self.view)
+                    if error != nil {
+                        self.writeDatabaseCustomer()
+                        print(“error”)
+                        return
+                    }
+                    else {
+                        storageRef.downloadURL(completion: { (url, error) in
+                            print(“Image URL: \((url?.absoluteString)!)”)
+                            self.writeDatabaseCustomer(imageUrl: (url?.absoluteString)!)
+                    })}
+                })
+            }
+            
+            } )
+            { (error) in
+                print(error.localizedDescription) }
+    }*/
+            
+            if let profileImageURL = value? ["profileImage"] as? String{
+                let url = NSURL(string: profileImageURL)
+                URLSession.shared.dataTask(with: url! as URL,
+                                                         completionHandler: {(data, response, error) in
+                                                                if error != nil {
+                                                                    print(error as Any)
+                                                                    return
+                                                                }
+                                                            DispatchQueue.main.async {
+                                                                  self.profileImage?.image = UIImage(data: data!)
+                                                            }
+                                                            
+                })
+            }
+        })}
 
         // Do any additional setup after loading the view.
-    }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -98,25 +148,54 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
         profileImage.image = scaledImage
         
         dismiss(animated: true, completion: nil)
+        
+        var data = Data()
+        data = profileImage.image!.jpegData(compressionQuality: 0.8)!
+        
+        let imageRef = Storage.storage().reference().child("images" + randomString(length: 20))
+        let uploadTask = imageRef.putData(data, metadata: nil) {(metadata, error) in
+            guard let metadata = metadata else {return}
+            imageRef.downloadURL{ (url, error) in
+                guard let downloadURL = url else {return}
+                self.iURL = downloadURL.absoluteString ?? ""
+                print(self.iURL)
+            }
+            
+        }
+    }
+    
+    func randomString(length: Int) -> String {
+      let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+      return String((0..<length).map{ _ in letters.randomElement()! })
     }
     
     @IBAction func saveProfile(_ sender: Any) {
        
-        guard let desiredC = desiredText.text, !desiredC.isEmpty else {return}
-        guard let currentC = currentText.text, !currentC.isEmpty else {return}
-        guard let profilename = nameText.text, !profilename.isEmpty else {return}
+        let currentID = Auth.auth().currentUser?.uid
         
-        let dataToSave: [String: Any] = ["profileName": profilename, "currentCurrency": currentC, "desiredCurrency": desiredC]
+        ref = Database.database().reference()
+        let userReferences = ref.child("users").child(currentID!)
         
-        docRef.setData(dataToSave, completion: { (error) in
-            if let error = error {
-                print("There is an error: \(error.localizedDescription)") }
-            else {
-                print("Data is saved")
-                self.navigationController?.popViewController(animated: true)
+        let profilename = nameText.text
+        let desiredC = desiredText.text
+        let currentC = currentText.text
+        let profileImage = iURL
+        
+        let value = ["profilename": profilename,
+        "desiredCurrency": desiredC,
+        "currentCurrency": currentC,
+        "profileImage": profileImage]
+        
+        userReferences.updateChildValues(value) { (error, ref) in
+                if error != nil {
+                    print("error data saved")
+                }
+                else
+                {
+                     self.navigationController?.popViewController(animated: true)
             }
-        })
- 
+        }
+        
         
     }
     
