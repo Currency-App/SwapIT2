@@ -1,0 +1,6 @@
+framework module Pods_SwapItTests {
+  umbrella header "Pods-SwapItTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
