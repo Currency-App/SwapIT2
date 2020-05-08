@@ -19,5 +19,6 @@ class User: NSObject {
     var desiredCurrency: String?
     var currentCurrency: String?
     var profileImage: String?
+    var imageName: String?
     
 }

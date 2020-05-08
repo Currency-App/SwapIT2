@@ -14,6 +14,8 @@ target 'SwapIt' do
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'
   pod 'Firebase/Storage'
+  pod 'FirebaseUI/Storage'
+  pod 'FirebaseUI/Database'
  
 
   target 'SwapItTests' do

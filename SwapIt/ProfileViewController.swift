@@ -31,19 +31,14 @@ class ProfileViewController: UIViewController {
             DispatchQueue.main.async {
                 self.currentLabel.text = value?["currentCurrency"] as? String
                 self.desiredLabel.text = value?["desiredCurrency"] as? String
-                if let profileImageURL = value? ["profileImage"] as? String {
-                    let url = NSURL(string: profileImageURL)
-                    URLSession.shared.dataTask(with: url! as URL,
-                                                             completionHandler: {(data, response, error) in
-                                                                    if error != nil {
-                                                                        print(error as Any)
-                                                                        return
-                                                                    }
-                                                                    
-                                                                self.profileImage?.image = UIImage(data: data!)
-                    })
-                }
                 self.usernameLabel.text = value?["profilename"] as? String
+                
+                let i = value?["imageName"] as? String
+                if i != nil {
+                    let storageRef = Storage.storage().reference().child(i!)
+                    self.profileImage.sd_setImage(with: storageRef)
+                }
+                
             }
           }) { (error) in
             print(error.localizedDescription)

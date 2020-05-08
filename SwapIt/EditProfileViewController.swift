@@ -12,6 +12,7 @@ import FirebaseFirestore
 import FirebaseDatabase
 import FirebaseStorage
 import FirebaseAuth
+import FirebaseUI
 
 
 class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextViewDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate{
@@ -24,6 +25,7 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
     var selectedCurrency: String?
     var currencyType = ["USD", "EUR"]
     var iURL: String?
+    var imageName: String?
     var ref: DatabaseReference!
     
     override func viewDidLoad() {
@@ -39,44 +41,10 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
             self.currentText.text = value?["currentCurrency"] as? String
             self.desiredText.text = value?["desiredCurrency"] as? String
             self.nameText.text = value?["profilename"] as? String
-            
-            /*
-            let storageRef = Storage.storage().reference(forURL: (value?["profileImage"] as? String)!
-            if let uploadData = UIImagePNGRepresentation(profileImage.image!)
-            {
-                storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
-                    self.hideActivityIndicator(view: self.view)
-                    if error != nil {
-                        self.writeDatabaseCustomer()
-                        print(“error”)
-                        return
-                    }
-                    else {
-                        storageRef.downloadURL(completion: { (url, error) in
-                            print(“Image URL: \((url?.absoluteString)!)”)
-                            self.writeDatabaseCustomer(imageUrl: (url?.absoluteString)!)
-                    })}
-                })
-            }
-            
-            } )
-            { (error) in
-                print(error.localizedDescription) }
-    }*/
-            
-            if let profileImageURL = value? ["profileImage"] as? String{
-                let url = NSURL(string: profileImageURL)
-                URLSession.shared.dataTask(with: url! as URL,
-                                                         completionHandler: {(data, response, error) in
-                                                                if error != nil {
-                                                                    print(error as Any)
-                                                                    return
-                                                                }
-                                                            DispatchQueue.main.async {
-                                                                  self.profileImage?.image = UIImage(data: data!)
-                                                            }
-                                                            
-                })
+            let i = value?["imageName"] as? String
+            if i != nil {
+                let storageRef = Storage.storage().reference().child(i!)
+                self.profileImage.sd_setImage(with: storageRef)
             }
         })}
 
@@ -140,6 +108,11 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
         present(picker, animated: true, completion: nil)
     }
     
+    func randomString(length: Int) -> String {
+      let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+      return String((0..<length).map{ _ in letters.randomElement()! })
+    }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[.editedImage] as! UIImage
         let size = CGSize(width: 250, height: 250)
@@ -151,8 +124,8 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
         
         var data = Data()
         data = profileImage.image!.jpegData(compressionQuality: 0.8)!
-        
-        let imageRef = Storage.storage().reference().child("images" + randomString(length: 20))
+        self.imageName = "images" + randomString(length: 20)
+        let imageRef = Storage.storage().reference().child(self.imageName!)
         let uploadTask = imageRef.putData(data, metadata: nil) {(metadata, error) in
             guard let metadata = metadata else {return}
             imageRef.downloadURL{ (url, error) in
@@ -160,14 +133,10 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
                 self.iURL = downloadURL.absoluteString ?? ""
                 print(self.iURL)
             }
-            
-        }
-    }
+        }}
     
-    func randomString(length: Int) -> String {
-      let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-      return String((0..<length).map{ _ in letters.randomElement()! })
-    }
+    
+    
     
     @IBAction func saveProfile(_ sender: Any) {
        
@@ -181,10 +150,12 @@ class EditProfileViewController: UIViewController, UIPickerViewDataSource, UIPic
         let currentC = currentText.text
         let profileImage = iURL
         
+        
         let value = ["profilename": profilename,
         "desiredCurrency": desiredC,
         "currentCurrency": currentC,
-        "profileImage": profileImage]
+        "profileImage": profileImage,
+        "imageName": self.imageName]
         
         userReferences.updateChildValues(value) { (error, ref) in
                 if error != nil {
