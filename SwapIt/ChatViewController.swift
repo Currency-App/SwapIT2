@@ -47,6 +47,8 @@ class ChatViewController: UIViewController {
             let recipientUserMessagesRef = Database.database().reference().child("user-messages").child(toID!).child(messageId)
             recipientUserMessagesRef.setValue(1)
         }
+        
+        messageTextField.text = ""
     }
     
 

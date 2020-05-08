@@ -14,7 +14,7 @@
 		1F42F468245D67E0002E9263 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F42F467245D67E0002E9263 /* WelcomeViewController.swift */; };
 		1F42F46A245F1F58002E9263 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F42F469245F1F58002E9263 /* EditProfileViewController.swift */; };
 		5C9CF8B8F9412141F48DF6E1 /* Pods_SwapItTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 556AC1229B719D9C6F4CA6F6 /* Pods_SwapItTests.framework */; };
-		6D5DFEDC245B990D00024895 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6D5DFEDB245B990D00024895 /* GoogleService-Info.plist */; };
+		6D37603C2464D5350092FDA7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6D37603B2464D5340092FDA7 /* GoogleService-Info.plist */; };
 		6D74E164245BCEB90056D2D0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D74E163245BCEB90056D2D0 /* LoginViewController.swift */; };
 		6D7E627F2460FD6F005CB1EC /* newMessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E627E2460FD6F005CB1EC /* newMessagesViewController.swift */; };
 		6D7E62832460FDBC005CB1EC /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7E62822460FDBC005CB1EC /* MessagesViewController.swift */; };
@@ -64,8 +64,8 @@
 		556AC1229B719D9C6F4CA6F6 /* Pods_SwapItTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwapItTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		56A48DBA5BF956F395E315DF /* Pods_SwapIt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwapIt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		60E3B92C435C166D4746B4A5 /* Pods-SwapIt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwapIt.debug.xcconfig"; path = "Target Support Files/Pods-SwapIt/Pods-SwapIt.debug.xcconfig"; sourceTree = "<group>"; };
+		6D37603B2464D5340092FDA7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6D3A93B5C2129D0EE63D6CDA /* Pods-SwapIt-SwapItUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwapIt-SwapItUITests.release.xcconfig"; path = "Target Support Files/Pods-SwapIt-SwapItUITests/Pods-SwapIt-SwapItUITests.release.xcconfig"; sourceTree = "<group>"; };
-		6D5DFEDB245B990D00024895 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6D74E163245BCEB90056D2D0 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		6D7E627E2460FD6F005CB1EC /* newMessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newMessagesViewController.swift; sourceTree = "<group>"; };
 		6D7E62822460FDBC005CB1EC /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
@@ -180,6 +180,7 @@
 		F41243152453B6EB00D83CD3 /* SwapIt */ = {
 			isa = PBXGroup;
 			children = (
+				6D37603B2464D5340092FDA7 /* GoogleService-Info.plist */,
 				F40526E4245FADE4006660CA /* Model */,
 				F41243162453B6EB00D83CD3 /* AppDelegate.swift */,
 				F41243182453B6EB00D83CD3 /* SceneDelegate.swift */,
@@ -189,7 +190,6 @@
 				F412431F2453B6F200D83CD3 /* Assets.xcassets */,
 				F41243212453B6F200D83CD3 /* LaunchScreen.storyboard */,
 				F41243242453B6F200D83CD3 /* Info.plist */,
-				6D5DFEDB245B990D00024895 /* GoogleService-Info.plist */,
 				6D74E163245BCEB90056D2D0 /* LoginViewController.swift */,
 				1CCA47DD245D08DA002201B6 /* ProfileViewController.swift */,
 				1F42F467245D67E0002E9263 /* WelcomeViewController.swift */,
@@ -334,7 +334,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F41243232453B6F200D83CD3 /* LaunchScreen.storyboard in Resources */,
-				6D5DFEDC245B990D00024895 /* GoogleService-Info.plist in Resources */,
+				6D37603C2464D5350092FDA7 /* GoogleService-Info.plist in Resources */,
 				F41243202453B6F200D83CD3 /* Assets.xcassets in Resources */,
 				F412431E2453B6EB00D83CD3 /* Main.storyboard in Resources */,
 			);

@@ -46,11 +46,12 @@ class MessagesViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.dataSource = self
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 150
-        //observeMessages()
+        
         let user = Auth.auth().currentUser
 
         if (user != nil) {
             observeUserMessages()
+            //observeMessages()
             
         } else {
             print("no user")

@@ -7,12 +7,16 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseDatabase
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var currency:[String] = []
     var values: [Double] = []
     @IBOutlet weak var tableview: UITableView!
+    
+    @IBOutlet weak var amountTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +70,22 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
     
-
+    @IBAction func postAction(_ sender: Any) {
+        let currentID = Auth.auth().currentUser?.uid
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        let userReferences = ref.child("users").child(currentID!)
+        let amount = amountTextField.text!
+        let value = ["currency": amount]
+        userReferences.updateChildValues(value) { (error, ref) in
+                if error != nil {
+                                 print("error saving data")
+                }
+        }
+        
+        amountTextField.text = ""
+    }
+    
     /*
     // MARK: - Navigation
 
